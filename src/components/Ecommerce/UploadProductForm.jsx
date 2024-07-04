@@ -10,9 +10,11 @@ const UploadProductForm = ({onClose,productTypeData}) => {
   const [productType, setProductType] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [stock, setStock] = useState(0);
-
+  const [loader,setLoader] = useState(false);
+  const [disabled,setDisabled] = useState(true);
   const handleSubmit =async () => {
     try {
+      setLoader(true)
       console.log( name,
         description,
         price,
@@ -36,15 +38,18 @@ const UploadProductForm = ({onClose,productTypeData}) => {
     });
     console.log("res",res)
     window.location.reload()
+    setLoader(false)
 
     } catch (error) {
       console.log("there is error while sending request")
+      setLoader(false)
     }
   };
 
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
     console.log(e.target.files[0])
+    setDisabled(false)
   };
 
   return (
@@ -142,9 +147,10 @@ const UploadProductForm = ({onClose,productTypeData}) => {
           onClick={()=>handleSubmit()}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Upload Product
+            {loader?"Loading...":"Upload Product"}
           </button>
           <button
+          disabled={disabled}
           type="button"
           onClick={onClose}
           className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-300"

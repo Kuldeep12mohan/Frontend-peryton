@@ -9,10 +9,13 @@ const AddServiceForm = ({onClose}) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [loader,setLoader] = useState(false);
+  const [disabled,setDisabled] = useState(true);
 
 
     const handleSubmit =async () => {
         try {
+          setLoader(true);
           console.log( 
             name,
             description,
@@ -31,15 +34,18 @@ const AddServiceForm = ({onClose}) => {
           
         });
         window.location.reload()
+        setLoader(false)
     
         } catch (error) {
           console.log("there is error while sending request")
+          setLoader(false)
         }
       };
 
 
     const handleImageChange = (e) => {
         setImageFile(e.target.files[0]);
+        setDisabled(false)
       };
 
     return (
@@ -95,10 +101,11 @@ const AddServiceForm = ({onClose}) => {
               onClick={()=>handleSubmit()}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
-                Upload Product
+                {loader?"Loading...":"Add Service"}
               </button>
               <button
               type="button"
+              disabled={disabled}
               onClick={onClose}
               className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-300"
             >

@@ -4,9 +4,11 @@ import axios from "axios";
 
 const AddCategoryForm = ({ onClose }) => {
   const [name, setName] = useState("");
+  const [loader,setLoader] = useState(false);
 
   const handleSubmit = async () => {
     try {
+      setLoader(true)
       await axios.post(
         `${process.env.NEXT_PUBLIC_Category_url}/addCategory`,
         { name },
@@ -18,8 +20,10 @@ const AddCategoryForm = ({ onClose }) => {
       );
       console.log("add category");
       window.location.reload()
+      setLoader(false)
     } catch (error) {
       console.log("there is error while sending request");
+      setLoader(false)
     }
   };
 
@@ -47,7 +51,7 @@ const AddCategoryForm = ({ onClose }) => {
             onClick={() => handleSubmit()}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Add
+            {!loader?"Add":"Loading..."}
           </button>
           <button
             onClick={onClose}

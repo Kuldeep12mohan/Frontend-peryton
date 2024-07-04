@@ -9,9 +9,11 @@ const UpdateProductForm = ({ updateItem, onClose, productTypeData }) => {
   const [price, setPrice] = useState(updateItem.price);
   const [productType, setProductType] = useState(updateItem.productType);
   const [stock, setStock] = useState(updateItem.stock);
+  const [loader,setLoader] = useState(false);
 
   const handleSubmit = async (id) => {
     try {
+      setLoader(true)
       console.log(id, name, description, price, productType, stock);
 
       const res = await axios.post(
@@ -31,8 +33,10 @@ const UpdateProductForm = ({ updateItem, onClose, productTypeData }) => {
         }
       );
       window.location.reload()
+      setLoader(false)
     } catch (error) {
       console.log("there is error while sending request");
+      setLoader(false)
     }
   };
 
@@ -128,7 +132,7 @@ const UpdateProductForm = ({ updateItem, onClose, productTypeData }) => {
             }}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Update
+          {!loader?"Update":"Loading..."}
           </button>
           <button
             type="button"
