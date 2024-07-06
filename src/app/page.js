@@ -7,7 +7,7 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const route = useRouter();
   const handleClick = (password) => {
-    if (password === "priya@1234") {
+    if (password === "Peryton@12345") {
       alert("Login Successful");
       localStorage.setItem("password", password);
       route.push("/admin")

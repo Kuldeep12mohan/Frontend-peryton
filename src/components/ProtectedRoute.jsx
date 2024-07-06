@@ -7,7 +7,7 @@ const ProtectedRoute = ({children}) => {
     const router=useRouter();
     useEffect(()=>{
         const storedPassword=localStorage.getItem('password')
-        if(storedPassword==="priya@1234"){
+        if(storedPassword==="Peryton@12345"){
             setIsAuthenticated(true);
         } else{
             router.push("/")
